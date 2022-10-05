@@ -1,0 +1,26 @@
+.wrapper {}
+
+.todo {
+
+	&__input {}
+
+	&__text {}
+
+	&__add {}
+
+	&__options {}
+
+	&__items {}
+
+	&__item {}
+
+	&__task {}
+
+	&__action {}
+
+	&__action-restore,
+	&__action-complete,
+	&__action-delete {
+		display: none;
+	}
+}

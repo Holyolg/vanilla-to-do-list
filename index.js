@@ -1,9 +1,30 @@
 const todo = {
-  action(e) {},
-	add() {
-		const elemText = document.querySelector('.todo__text')
-		if (elemText.disabled ||)
-	},
+  action(e) {
+    const target = e.target;
+    if (target.classList.contains("todo__action")) {
+      const action = target.dataset.todoAction;
+      const elemItem = target.closest(".todo__item");
+      if (action === "deleted" && elemItem.dataset.todoState === "deleted") {
+        elemItem.remove();
+      } else {
+        elemItem.dataset.todoState = action;
+      }
+      this.save();
+    } else if (target.classList.contains("todo_add")) {
+      this.add();
+      this.save();
+    }
+  },
+  add() {
+    const elemText = document.querySelector(".todo__text");
+    if (elemText.disabled || !elemText.value.length) {
+      return;
+    }
+    document
+      .querySelector(".todo__items")
+      .insertAdjacentHTML("beforeend", this.create(elemText.value));
+    elemText.value = "";
+  },
   create() {
     return `<li class="todo__item" data-todo-state="active">
     <span class="todo__task">${text}</span>
@@ -33,3 +54,4 @@ const todo = {
     );
   },
 };
+todo.init();

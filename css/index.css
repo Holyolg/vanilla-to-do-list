@@ -1,0 +1,3 @@
+.todo__action-restore, .todo__action-complete, .todo__action-delete {
+  display: none;
+}
