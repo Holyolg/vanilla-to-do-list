@@ -1,15 +1,23 @@
 let input = document.querySelector("#input");
 let add = document.querySelector("#add");
 let list = document.querySelector("#ul");
+// слушатель на инпут через enter
+input.addEventListener("keydown", function (event) {
+  if (event.keyCode === 13) {
+    addNewItem();
+  }
+});
+// слушатель на кнопку add через клик
+add.addEventListener("click", addNewItem);
 
-add.addEventListener("click", (e) => {
+function addNewItem() {
   if (input.value === "") {
     return;
   }
   // вызываем функцию с параметром input.value
   createDeleteElements(input.value);
   input.value = "";
-});
+}
 //функция создания и удаления элементов списка
 function createDeleteElements(value) {
   const li = document.createElement("li");
@@ -27,31 +35,8 @@ function createDeleteElements(value) {
   });
   // создание
   list.appendChild(li);
-}
-/*add.addEventListener("click", function () {
-  const li = document.createElement("li");
-  li.className = "list__item";
 
-	btn.className = "close";
-  let txt = document.createTextNode("\u00D7");
-  const value = input.value;
-  let text = document.createTextNode(value);
-
-  li.appendChild(text);
-  li.appendChild(btn);
-  btn.appendChild(txt);
-
-  if (value === "") {
-    alert("!");
-  } else {
-    document.getElementById("ul").appendChild(li);
-  }
-  document.getElementById("input").value = "";
-
-  let liItem = document.querySelector(".list__item");
-  btn.addEventListener("click", function () {
-    this.();
-    console.log("s");
+  li.addEventListener("click", (e) => {
+    li.classList.toggle("checked");
   });
-}); 
-*/
+}

@@ -1,3 +1,9 @@
+.todo__delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 .list__item.checked {
   text-decoration: line-through;
 }
