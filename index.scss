@@ -4,23 +4,27 @@
 
 	&__input {}
 
-	&__text {}
-
 	&__add {}
 
-	&__options {}
+	&__list {}
 
-	&__items {}
+	&__save {}
 
-	&__item {}
+	&__delete {}
+}
 
-	&__task {}
+.list {
 
-	&__action {}
-
-	&__action-restore,
-	&__action-complete,
-	&__action-delete {
-		display: none;
+	&__item.checked {
+		text-decoration: line-through;
 	}
+
+	&__item {
+		cursor: pointer;
+		position: relative;
+	}
+}
+
+.close {
+	padding: 10px;
 }

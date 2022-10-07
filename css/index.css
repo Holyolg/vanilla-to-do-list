@@ -1,3 +1,11 @@
-.todo__action-restore, .todo__action-complete, .todo__action-delete {
-  display: none;
+.list__item.checked {
+  text-decoration: line-through;
+}
+.list__item {
+  cursor: pointer;
+  position: relative;
+}
+
+.close {
+  padding: 10px;
 }
