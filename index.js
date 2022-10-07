@@ -27,7 +27,8 @@ function createDeleteElements(value) {
   li.textContent = value;
 
   btn.className = "todo__delete";
-  btn.textContent = "X";
+
+  btn.textContent = "x";
   li.appendChild(btn);
   // удаление
   btn.addEventListener("click", (e) => {
