@@ -1,6 +1,32 @@
 let input = document.querySelector("#input");
 let add = document.querySelector("#add");
 let list = document.querySelector("#ul");
+let save = document.querySelector("#save");
+let li = document.createElement("li");
+let btn = document.createElement("button");
+let tasks = [];
+
+if (localStorage.getItem("tasks")) {
+  tasks = JSON.parse(localStorage.getItem("tasks"));
+}
+
+tasks.forEach(function (task) {
+  let li = document.createElement("li");
+  let btn = document.createElement("button");
+  list.appendChild(li);
+  li.className = "list__item";
+  li.id = task.id;
+  li.textContent = task.text;
+  li.dataset.active = "done";
+  btn.dataset.active = "delete";
+  btn.className = "todo__delete";
+  btn.textContent = "x";
+  li.appendChild(btn);
+  if (task.done === true) {
+    li.className = "list__item checked";
+  }
+});
+
 // слушатель на инпут через enter
 input.addEventListener("keydown", function (event) {
   if (event.keyCode === 13) {
@@ -20,24 +46,61 @@ function addNewItem() {
 }
 //функция создания и удаления элементов списка
 function createDeleteElements(value) {
-  const li = document.createElement("li");
-  const btn = document.createElement("button");
-
+  let li = document.createElement("li");
+  let btn = document.createElement("button");
+  let tasksText = value;
   li.className = "list__item";
-  li.textContent = value;
 
+  const newTask = {
+    id: Date.now(),
+    text: tasksText,
+    done: false,
+  };
+
+  tasks.push(newTask);
+  //сохранение в LocalStorage
+  saveToLocal();
+  // класс для выполненных и невыполненных задач
+  if (newTask.done === true) {
+    li.className = "list__item checked";
+  }
+  li.textContent = newTask.text;
+  li.id = newTask.id;
+  li.dataset.active = "done";
+  list.appendChild(li);
   btn.className = "todo__delete";
-
+  btn.dataset.active = "delete";
   btn.textContent = "x";
   li.appendChild(btn);
-  // удаление
-  btn.addEventListener("click", (e) => {
-    li.remove();
-  });
   // создание
-  list.appendChild(li);
+}
+// удаление задачи
+list.addEventListener("click", (e) => {
+  if (e.target.dataset.active === "delete") {
+    const parentNode = e.target.closest("li");
+    const id = parentNode.id;
+    console.log(id);
+    // сравниваем айди в массиве, если есть - вырезаем с помощью splice
+    const index = tasks.findIndex((tasks) => tasks.id == id);
+    tasks.splice(index, 1);
+    //сохранение в LocalStorage
+    parentNode.remove();
+    saveToLocal();
+  }
+});
 
-  li.addEventListener("click", (e) => {
-    li.classList.toggle("checked");
-  });
+list.addEventListener("click", (e) => {
+  if (e.target.dataset.active === "done") {
+    const parentNode = e.target.closest("li");
+    parentNode.classList.toggle("checked");
+    const id = parentNode.id;
+    const task = tasks.find((tasks) => tasks.id == id);
+    task.done = !task.done;
+    //сохранение в LocalStorage
+    saveToLocal();
+  }
+});
+
+function saveToLocal() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 }
